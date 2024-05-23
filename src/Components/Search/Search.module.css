@@ -1,0 +1,25 @@
+.searchSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 20px 0 5px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 40px;
+  max-width: 200px;
+}
+
+.searchSection input {
+  position: relative;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  outline: 0;
+  max-width: 200px;
+  color: black;
+  font-size: 15px;
+}
+
+.searchSection input::placeholder {
+  color: var(--white);
+}
