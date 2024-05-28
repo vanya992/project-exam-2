@@ -1,31 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Search.module.css";
 import { FaSearch } from "react-icons/fa";
 
 export const SearchBar = ({ setResults, input, setInput }) => {
-  const fetchData = (value) => {
-    const url = "https://v2.api.noroff.dev/holidaze/venues";
-    fetch(url)
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        const results = Array.isArray(json.data)
-          ? json.data.filter((dataItem) => {
-              return (
-                dataItem &&
-                dataItem.name &&
-                dataItem.name.toLowerCase().includes(value.toLowerCase())
-              );
-            })
-          : [];
+  const [allData, setAllData] = useState([]);
 
-        setResults(results);
-      });
+  const fetchData = async (page = 1, accumulatedData = []) => {
+    const limit = 100;
+    const url = `https://v2.api.noroff.dev/holidaze/venues?limit=${limit}&page=${page}`;
+    try {
+      const response = await fetch(url);
+      const json = await response.json();
+      const newData = accumulatedData.concat(json.data);
+
+      if (json.data.length < limit) {
+        setAllData(newData);
+      } else {
+        fetchData(page + 1, newData);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setResults([]);
+    }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleChange = (value) => {
     setInput(value);
-    fetchData(value);
+    const results = allData.filter((dataItem) => {
+      return (
+        dataItem &&
+        dataItem.name &&
+        dataItem.name.toLowerCase().includes(value.toLowerCase())
+      );
+    });
+    setResults(results);
   };
 
   return (
