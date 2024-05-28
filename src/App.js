@@ -12,6 +12,7 @@ import {
 import { AuthFormToggle } from "./Auth/AuthFormToggle";
 import { AuthProvider } from "./Auth/index";
 import { PrivateRoute } from "./Auth/Wrapper/index.jsx";
+import { UpdateVenue } from "./Components/Venues/UpdateVenue/index.jsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route path="/update-venue/:id" element={<UpdateVenue />} />
             <Route
               path="/profile"
               element={
@@ -40,6 +42,7 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route path="/profile/:username" element={<Profile />} />
           </Route>
           <Route path="*" element={<div>Page not found</div>} />
         </Routes>

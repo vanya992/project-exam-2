@@ -1,0 +1,73 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  margin: auto;
+}
+
+.fieldHolder {
+  position: relative;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+input,
+textarea,
+select {
+  border: 0;
+  border-bottom: 1px solid black;
+  background: transparent;
+  outline: none;
+  padding: 2px;
+  width: 100%;
+}
+
+label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  transition: 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+input,
+label {
+  font-size: 1.3em;
+  height: 55px;
+}
+
+select {
+  padding-top: 35px;
+}
+
+textarea {
+  height: 100px;
+}
+
+input:focus + label,
+input:valid + label,
+textarea:focus + label,
+textarea:valid + label,
+select:focus + label,
+select:valid + label {
+  color: grey;
+  font-size: 1em;
+  top: -35px;
+  margin-top: 2px;
+}
+
+.groupFields {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.groupFields .fieldHolder {
+  flex: 0 0 48%;
+}

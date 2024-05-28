@@ -11,6 +11,12 @@ header {
   height: 80px;
 }
 
+.searchContainer {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
 nav ul {
   display: flex;
   justify-items: center;
@@ -25,8 +31,8 @@ nav ul li {
 nav {
   display: flex;
   flex-direction: row;
-  flex-grow: 1;
   justify-content: flex-end;
+  flex-grow: 1;
 }
 
 .close,
