@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
+import { ContactForm } from "../../Forms/ContactForm";
 import styles from "./Contact.module.css";
 
 export const Contact = () => {
@@ -14,26 +15,8 @@ export const Contact = () => {
     <main className={styles.bg}>
       <Helmet>
         <title>Contact | Holidaze</title>
+        <ContactForm />
       </Helmet>
-      <div className={styles.formBox}>
-        <h1>Contact Us</h1>
-        <div>
-          <form>
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Name" required />
-            <label>Email</label>
-            <input type="email" name="email" placeholder="Email" required />
-            <label>Subject</label>
-            <input type="text" name="subject" placeholder="Subject" required />
-            <label>Message</label>
-            <textarea
-              name="message"
-              placeholder="How can we help you?"
-              required
-            />
-          </form>
-        </div>
-      </div>
     </main>
   );
 };
