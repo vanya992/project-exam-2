@@ -1,4 +1,3 @@
-// src/Components/DatePicker/DateRangePicker.jsx
 import React, { useState, useEffect } from "react";
 import { format, differenceInDays, startOfDay } from "date-fns";
 import { Calendar } from "../../Calendar";
@@ -109,7 +108,7 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
       />
       <button
         type="submit"
-        className={styles.submitButton}
+        className="ctaButton"
         onClick={handleSubmit}
         disabled={!selectedStartDate || !selectedEndDate}
       >
