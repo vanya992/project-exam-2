@@ -1,32 +1,44 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../../Auth";
 import styles from "./Profile.module.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { UpdateProfileForm } from "../../Forms/UpdateProfileForm";
+import { Loader } from "../../Components/Loader";
+
+const defaultAvatarUrl =
+  "https://cdn-icons-png.flaticon.com/512/149/149071.png";
 
 export const Profile = () => {
   const { user } = useAuth();
+  const { username } = useParams();
+  const isLoggedInUser = !username || username === user?.name;
   const apiKey = process.env.REACT_APP_API_KEY;
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
   useEffect(() => {
     const fetchProfileData = async () => {
-      if (!user || !user.name || !apiKey) {
-        console.error("User, user name, or API key is not defined");
+      const userToFetch = username || user?.name;
+      if (!userToFetch || !apiKey) {
+        console.error("Username or API key is not defined");
         return;
       }
-      console.log("Fetching profile data for user:", user.name);
+      console.log("Fetching profile data for user:", userToFetch);
       console.log("API Key:", apiKey);
 
-      const url = `https://v2.api.noroff.dev/holidaze/profiles/${user.name}?_bookings=true&_venues=true`;
+      const url = `https://v2.api.noroff.dev/holidaze/profiles/${userToFetch}?_bookings=true&_venues=true`;
       console.log("Profile fetch URL:", url);
 
       try {
         const response = await fetch(url, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${user?.token}`,
             "X-Noroff-Api-Key": apiKey,
           },
         });
@@ -50,13 +62,74 @@ export const Profile = () => {
       }
     };
 
-    if (user && user.name && apiKey) {
+    if (user || username) {
       fetchProfileData();
     }
-  }, [user, apiKey]);
+  }, [username, apiKey, user]);
+
+  const deleteVenue = async (venueId) => {
+    if (!user || !user.token) {
+      alert("You must be logged in to delete a venue.");
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this venue?"
+    );
+    if (!confirmDelete) {
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "X-Noroff-Api-Key": apiKey,
+      },
+    };
+
+    try {
+      const response = await axios.delete(
+        `https://v2.api.noroff.dev/holidaze/venues/${venueId}`,
+        config
+      );
+      if (response.status === 204) {
+        alert("Venue deleted successfully");
+        setProfileData((prevData) => ({
+          ...prevData,
+          venues: prevData.venues.filter((venue) => venue.id !== venueId),
+        }));
+      } else {
+        console.error("Error deleting venue");
+        setError("Error deleting venue");
+      }
+    } catch (error) {
+      console.error("Error deleting venue:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      } else if (error.request) {
+        console.error("Request data:", error.request);
+      } else {
+        console.error("Error message:", error.message);
+      }
+    }
+  };
+
+  const handleImageError = (e) => {
+    e.target.src = defaultAvatarUrl;
+  };
+
+  const toggleForm = () => {
+    setIsFormOpen(!isFormOpen);
+  };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Loader loading={loading} />
+      </div>
+    );
   }
 
   if (error) {
@@ -70,10 +143,17 @@ export const Profile = () => {
   return (
     <div className={styles.profileContainer}>
       <div className={styles.sidebar}>
-        {profileData.avatar && (
-          <div className={styles.avatar}>
-            <img src={profileData.avatar.url} alt={profileData.avatar.alt} />
-          </div>
+        <div className={styles.avatar}>
+          <img
+            src={profileData.avatar?.url || defaultAvatarUrl}
+            alt={profileData.avatar?.alt || "Default Avatar"}
+            onError={handleImageError}
+          />
+        </div>
+        {isLoggedInUser && (
+          <button className="ctaButton" onClick={() => setIsFormOpen(true)}>
+            Update Profile
+          </button>
         )}
         <div className={styles.info}>
           <h1>{profileData.name}</h1>
@@ -105,35 +185,70 @@ export const Profile = () => {
             ))
           ) : (
             <p>
-              You haven't made any bookings yet. What are you waiting? Go check
-              our <Link to="/venues">venues</Link> page.
+              You haven't made any bookings yet. What are you waiting for? Go
+              check our <Link to="/venues">venues</Link> page.
             </p>
           )}
         </div>
+        <hr />
         {profileData.venueManager && (
           <div className={styles.venues}>
             <h2>Your Venues</h2>
             {profileData.venues && profileData.venues.length > 0 ? (
               profileData.venues.map((venue) => (
                 <div key={venue.id} className={styles.venue}>
-                  {venue.media && venue.media.length > 0 && (
-                    <img
-                      src={venue.media[0].url}
-                      alt={venue.media[0].alt}
-                      className={styles.venueImage}
-                    />
-                  )}
+                  <Link to={`/venue/${venue.id}`}>
+                    {venue.media && venue.media.length > 0 && (
+                      <img
+                        src={venue.media[0].url}
+                        alt={venue.media[0].alt}
+                        className={styles.venueImage}
+                      />
+                    )}
+                  </Link>
                   <div className={styles.venueInfo}>
                     <h3>{venue.name}</h3>
                     <p>{venue.description}</p>
                     <p>Price: ${venue.price}</p>
                     <p>Max Guests: {venue.maxGuests}</p>
                   </div>
+                  {isLoggedInUser && (
+                    <div className={styles.buttons}>
+                      <div>
+                        <Link to={`/update-venue/${venue.id}`}>
+                          <button className="ctaButton">Update</button>
+                        </Link>
+                      </div>
+                      <div>
+                        <button
+                          className="ctaButton"
+                          onClick={() => deleteVenue(venue.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))
             ) : (
               <p>No venues available.</p>
             )}
+          </div>
+        )}
+        {isLoggedInUser && (
+          <div
+            className={`${styles.updateFormContainer} ${
+              isFormOpen ? styles.open : ""
+            }`}
+          >
+            <UpdateProfileForm
+              user={user}
+              apiKey={apiKey}
+              profileData={profileData}
+              setProfileData={setProfileData}
+              closeForm={() => setIsFormOpen(false)}
+            />
           </div>
         )}
       </div>

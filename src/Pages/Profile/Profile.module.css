@@ -50,6 +50,12 @@
   margin-right: 20px;
 }
 
+.venueImage {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
 .bookingInfo,
 .venueInfo {
   display: flex;
@@ -59,4 +65,42 @@
 
 h2 {
   margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: auto;
+}
+
+@media only screen and (max-width: 650px) {
+  .sidebar,
+  .mainContent {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .venueImage,
+  .bookingImage {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.updateFormContainer {
+  position: fixed;
+  left: -50%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.updateFormContainer.open {
+  left: 0;
 }
