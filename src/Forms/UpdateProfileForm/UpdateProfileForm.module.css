@@ -1,0 +1,39 @@
+.updateProfileForm {
+  position: fixed;
+  left: -50%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.updateProfileForm.open {
+  left: 0;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+}
+
+.formControl {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+.ctaButton {
+  margin-right: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.ctaButton:hover {
+  background-color: #0056b3;
+}

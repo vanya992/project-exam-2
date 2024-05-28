@@ -1,0 +1,61 @@
+.formContainer {
+  max-width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formContainer label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.formContainer input,
+.formContainer textarea,
+.country {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.formContainer fieldset {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  padding: 10px;
+}
+
+.formContainer legend {
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+.formContainer .inlineGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
+.formContainer .inlineGroup label {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.formContainer .inlineGroup label:last-child {
+  margin-right: 0;
+}
+
+.imagePreview {
+  max-width: 20%;
+  margin-top: 10px;
+}
+
+.amenities {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
