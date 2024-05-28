@@ -12,6 +12,12 @@ export const AuthProvider = ({ children }) => {
     const userName = localStorage.getItem("userName");
     const venueManager = localStorage.getItem("venueManager") === "true";
 
+    console.log("useEffect - AuthProvider:", {
+      authToken,
+      userName,
+      venueManager,
+    });
+
     if (authToken && userName) {
       setUser({
         token: authToken,
@@ -20,6 +26,39 @@ export const AuthProvider = ({ children }) => {
       });
     }
   }, []);
+
+  const fetchUserProfile = async (token, userName) => {
+    try {
+      const response = await fetch(
+        `https://v2.api.noroff.dev/holidaze/profiles/${userName}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-Noroff-Api-Key": process.env.REACT_APP_API_KEY,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const venueManager = data.data.venueManager || false;
+
+        console.log("fetchUserProfile - response data:", { venueManager });
+
+        localStorage.setItem("venueManager", venueManager.toString());
+
+        setUser((prevUser) => ({
+          ...prevUser,
+          venueManager,
+        }));
+      } else {
+        console.error("Error fetching user profile");
+      }
+    } catch (error) {
+      console.error("Failed to fetch user profile:", error.message);
+    }
+  };
 
   const login = async (credentials) => {
     try {
@@ -35,13 +74,15 @@ export const AuthProvider = ({ children }) => {
         const data = await response.json();
         const token = data.data.accessToken;
         const user = data.data.name;
-        const venueManager = data.data.venueManager || false;
+
+        console.log("login - response data:", { token, user });
 
         localStorage.setItem("authToken", token);
         localStorage.setItem("userName", user);
-        localStorage.setItem("venueManager", venueManager.toString());
 
-        setUser({ token, name: user, venueManager });
+        setUser({ token, name: user, venueManager: false });
+
+        await fetchUserProfile(token, user);
 
         navigate("/profile");
       } else {
