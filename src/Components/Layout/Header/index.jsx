@@ -34,7 +34,9 @@ export const Header = () => {
       <Link to="/">
         <img src={logo} alt="logo" className={styles.logo} />
       </Link>
-      <SearchBar setResults={setResults} input={input} setInput={setInput} />
+      <div className={styles.searchContainer}>
+        <SearchBar setResults={setResults} input={input} setInput={setInput} />
+      </div>
       {results.length > 0 && (
         <SearchResults results={results} resetInput={resetInput} />
       )}
