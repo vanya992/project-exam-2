@@ -1,6 +1,7 @@
 import React from "react";
+import styles from "../VenueForms.module.css";
 
-export const VenueForm = ({
+export const UpdateVenueForm = ({
   formData,
   handleChange,
   handleMediaChange,
@@ -8,7 +9,7 @@ export const VenueForm = ({
   handleSubmit,
 }) => {
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.formContainer} onSubmit={handleSubmit}>
       <label>
         Name:
         <input
@@ -28,37 +29,39 @@ export const VenueForm = ({
           required
         />
       </label>
-      <label>
-        Price:
-        <input
-          type="number"
-          name="price"
-          value={formData.price || ""}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Max Guests:
-        <input
-          type="number"
-          name="maxGuests"
-          value={formData.maxGuests || ""}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Rating:
-        <input
-          type="number"
-          name="rating"
-          value={formData.rating || ""}
-          onChange={handleChange}
-        />
-      </label>
-      <fieldset>
-        <legend>Meta:</legend>
+      <div className={styles.inlineGroup}>
+        <label>
+          Price:
+          <input
+            type="number"
+            name="price"
+            value={formData.price || ""}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Max Guests:
+          <input
+            type="number"
+            name="maxGuests"
+            value={formData.maxGuests || ""}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label>
+          Rating:
+          <input
+            type="number"
+            name="rating"
+            value={formData.rating || ""}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+      <fieldset className={styles.amenities}>
+        <legend>Amenities:</legend>
         <label>
           WiFi:
           <input
@@ -98,42 +101,44 @@ export const VenueForm = ({
       </fieldset>
       <fieldset>
         <legend>Location:</legend>
-        <label>
-          Address:
-          <input
-            type="text"
-            name="address"
-            value={formData.location.address || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          City:
-          <input
-            type="text"
-            name="city"
-            value={formData.location.city || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Country:
-          <input
-            type="text"
-            name="country"
-            value={formData.location.country || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Continent:
-          <input
-            type="text"
-            name="continent"
-            value={formData.location.continent || ""}
-            onChange={handleChange}
-          />
-        </label>
+        <div className={styles.inlineGroup}>
+          <label>
+            Address:
+            <input
+              type="text"
+              name="address"
+              value={formData.location.address || ""}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            City:
+            <input
+              type="text"
+              name="city"
+              value={formData.location.city || ""}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            Country:
+            <input
+              type="text"
+              name="country"
+              value={formData.location.country || ""}
+              onChange={handleChange}
+            />
+          </label>
+          <label>
+            Continent:
+            <input
+              type="text"
+              name="continent"
+              value={formData.location.continent || ""}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
       </fieldset>
       <fieldset>
         <legend>Media:</legend>

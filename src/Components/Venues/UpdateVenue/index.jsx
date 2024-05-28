@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { useAuth } from "../../../Auth";
-import { VenueForm } from "../../../Forms/UpdateVenueForm";
+import { UpdateVenueForm } from "../../../Forms/UpdateVenueForm";
 import { useParams } from "react-router-dom";
 
 export const UpdateVenue = () => {
@@ -143,7 +143,7 @@ export const UpdateVenue = () => {
   }
 
   return (
-    <VenueForm
+    <UpdateVenueForm
       formData={formData}
       handleChange={handleChange}
       handleMediaChange={handleMediaChange}

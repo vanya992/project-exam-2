@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useAuth } from "../../../Auth";
-import { VenueForm } from "../../../Forms/CreateVenueForm";
+import { CreateVenueForm } from "../../../Forms/CreateVenueForm";
 import { Helmet } from "react-helmet";
 
 export const CreateVenue = () => {
@@ -158,7 +158,7 @@ export const CreateVenue = () => {
       <Helmet>
         <title>Create Venue | Holidaze</title>
       </Helmet>
-      <VenueForm
+      <CreateVenueForm
         formData={formData}
         handleChange={handleChange}
         handleCountryChange={handleCountryChange}

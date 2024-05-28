@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import styles from "./CreateVenueForm.module.css";
 import { Link } from "react-router-dom";
+import styles from "../VenueForms.module.css";
 import { FaUtensils, FaWifi, FaPaw } from "react-icons/fa";
 import { FaSquareParking } from "react-icons/fa6";
 import countryList from "react-select-country-list";
 
-export const VenueForm = ({
+export const CreateVenueForm = ({
   formData,
   handleChange,
   handleCountryChange,
@@ -31,7 +31,7 @@ export const VenueForm = ({
 
   if (successMessage) {
     return (
-      <div className="success-message">
+      <div className={styles.successMessage}>
         <h2>Congratulations, Venue created successfully!</h2>
         <p>
           <Link to="/venues">Go check other venues</Link> or{" "}
