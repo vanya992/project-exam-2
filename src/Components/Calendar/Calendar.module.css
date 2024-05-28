@@ -1,0 +1,89 @@
+/* src/Components/Calendar/Calendar.module.css */
+.calendarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.navButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.currentDate {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.day {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.selectedDay {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.inRangeDay {
+  background-color: #d3d3d3;
+}
+
+.hoveringDay {
+  background-color: #add8e6;
+}
+
+.today {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.unavailableDay {
+  background-color: #f8d7da;
+  pointer-events: none;
+}
+
+.pastDay {
+  background-color: #e0e0e0;
+  pointer-events: none;
+}
+
+.guests {
+  margin-top: 20px;
+}
+
+.guestLabel {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.guestSelect {
+  width: 100%;
+  padding: 10px;
+}
+
+.totalPrice {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.priceAmount {
+  font-weight: bold;
+}

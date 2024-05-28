@@ -1,20 +1,45 @@
-input.inputBox {
-  font-size: 22px;
-  padding: 5px 8px 4px 8px;
-  border-radius: 3px;
-  border: 1px solid black;
-}
-
-.calendarWrap {
-  display: inline-block;
+.datepickerContainer {
   position: relative;
+  display: inline-block;
 }
 
-.calendarElement {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 40px;
+.datepickerInput {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  z-index: 999;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bookingForm {
+  margin-top: 20px;
+}
+
+.bookingForm label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.bookingForm input[type="number"] {
+  width: 50px;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.bookingForm p {
+  margin-top: 10px;
+}
+
+.bookingForm button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bookingForm button:hover {
+  background-color: #0056b3;
 }
