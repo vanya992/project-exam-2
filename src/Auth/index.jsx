@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
@@ -18,12 +19,18 @@ export const AuthProvider = ({ children }) => {
       venueManager,
     });
 
-    if (authToken && userName) {
+    if (authToken && typeof authToken === "string" && userName) {
+      const decodedToken = jwtDecode(authToken);
+      console.log("Decoded Token on load:", decodedToken);
+
+      // Bypass the expiration check
       setUser({
         token: authToken,
         name: userName,
         venueManager,
       });
+    } else {
+      localStorage.removeItem("authToken");
     }
   }, []);
 
@@ -77,6 +84,10 @@ export const AuthProvider = ({ children }) => {
 
         console.log("login - response data:", { token, user });
 
+        const decodedToken = jwtDecode(token);
+        console.log("Decoded Token after login:", decodedToken);
+
+        // Bypass the expiration check
         localStorage.setItem("authToken", token);
         localStorage.setItem("userName", user);
 

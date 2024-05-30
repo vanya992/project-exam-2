@@ -3,13 +3,34 @@ import { format, differenceInDays, startOfDay } from "date-fns";
 import { Calendar } from "../../Calendar";
 import { useAuth } from "../../../Auth";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import styles from "./DateRangePicker.module.css";
+
+const isTokenValid = (token) => {
+  if (!token) return false;
+  try {
+    const decoded = jwtDecode(token);
+    console.log("Decoded Token during booking:", decoded);
+    if (!decoded.exp) {
+      console.warn(
+        "Token does not have an exp claim. Token validity cannot be ensured."
+      );
+      return true;
+    }
+    const currentTime = Date.now() / 1000;
+    return decoded.exp > currentTime;
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return false;
+  }
+};
 
 export const DateRangePicker = ({ venue, onBookingSuccess }) => {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [priceChange, setPriceChange] = useState(null);
   const [guests, setGuests] = useState(1);
+  const [successMessage, setSuccessMessage] = useState("");
   const { user } = useAuth();
 
   const toDateString = (date) =>
@@ -43,33 +64,57 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
       const bookingData = {
         dateFrom: toDateString(selectedStartDate),
         dateTo: toDateString(selectedEndDate),
-        guests: guests,
+        guests,
         venueId: venue.id,
       };
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        };
-        const response = await axios.post(
-          "https://v2.api.noroff.dev/holidaze/bookings",
-          bookingData,
-          config
-        );
-        if (response.status === 201) {
-          if (onBookingSuccess) {
-            onBookingSuccess(response.data);
+
+      console.log("Booking Data:", bookingData);
+
+      if (user && user.token) {
+        const tokenValid = isTokenValid(user.token);
+        console.log("Token:", user.token);
+        console.log("Token Validity:", tokenValid);
+
+        if (tokenValid) {
+          try {
+            const config = {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+                "X-Noroff-Api-Key": process.env.REACT_APP_API_KEY,
+                "Content-Type": "application/json",
+              },
+            };
+
+            console.log("Config Headers:", config.headers);
+
+            const response = await axios.post(
+              "https://v2.api.noroff.dev/holidaze/bookings",
+              bookingData,
+              config
+            );
+
+            console.log("API Response:", response);
+
+            if (response.status === 201) {
+              if (onBookingSuccess) {
+                onBookingSuccess(response.data);
+              }
+              setSuccessMessage("Booking successful!");
+            } else {
+              throw new Error("Booking failed.");
+            }
+          } catch (error) {
+            console.error("Error booking venue:", error);
+            alert("There was an error booking the venue.");
           }
         } else {
-          throw new Error("Booking failed.");
+          alert("Token has expired. Please log in again.");
         }
-      } catch (error) {
-        console.log("Error booking venue:", error);
-        alert("There was an error booking the venue.");
+      } else {
+        alert("User is not authenticated.");
       }
     } else {
-      console.log("error");
+      alert("Please select valid start and end dates.");
     }
   };
 
@@ -114,6 +159,10 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
       >
         Book venue
       </button>
+      {successMessage && (
+        <p className={styles.successMessage}>{successMessage}</p>
+      )}{" "}
+      {/* Display success message */}
     </div>
   );
 };
