@@ -4,6 +4,7 @@ import { Calendar } from "../../Calendar";
 import { useAuth } from "../../../Auth";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import Confetti from "react-confetti";
 import styles from "./DateRangePicker.module.css";
 
 const isTokenValid = (token) => {
@@ -31,6 +32,7 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
   const [priceChange, setPriceChange] = useState(null);
   const [guests, setGuests] = useState(1);
   const [successMessage, setSuccessMessage] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
   const { user } = useAuth();
 
   const toDateString = (date) =>
@@ -64,7 +66,7 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
       const bookingData = {
         dateFrom: toDateString(selectedStartDate),
         dateTo: toDateString(selectedEndDate),
-        guests,
+        guests: parseInt(guests),
         venueId: venue.id,
       };
 
@@ -100,11 +102,22 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
                 onBookingSuccess(response.data);
               }
               setSuccessMessage("Booking successful!");
+              setShowConfetti(true);
+              setTimeout(() => setShowConfetti(false), 5000);
             } else {
               throw new Error("Booking failed.");
             }
           } catch (error) {
             console.error("Error booking venue:", error);
+            if (error.response) {
+              console.error("Error response data:", error.response.data);
+              console.error("Error response status:", error.response.status);
+              console.error("Error response headers:", error.response.headers);
+            } else if (error.request) {
+              console.error("Error request data:", error.request);
+            } else {
+              console.error("Error message:", error.message);
+            }
             alert("There was an error booking the venue.");
           }
         } else {
@@ -120,6 +133,7 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
 
   return (
     <div className={styles.dateRangePicker}>
+      {showConfetti && <Confetti />}
       <div className={styles.selectedDates}>
         {selectedStartDate ? (
           selectedEndDate ? (

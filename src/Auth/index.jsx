@@ -22,8 +22,6 @@ export const AuthProvider = ({ children }) => {
     if (authToken && typeof authToken === "string" && userName) {
       const decodedToken = jwtDecode(authToken);
       console.log("Decoded Token on load:", decodedToken);
-
-      // Bypass the expiration check
       setUser({
         token: authToken,
         name: userName,
@@ -87,7 +85,6 @@ export const AuthProvider = ({ children }) => {
         const decodedToken = jwtDecode(token);
         console.log("Decoded Token after login:", decodedToken);
 
-        // Bypass the expiration check
         localStorage.setItem("authToken", token);
         localStorage.setItem("userName", user);
 
