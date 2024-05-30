@@ -141,116 +141,120 @@ export const Profile = () => {
   }
 
   return (
-    <div className={styles.profileContainer}>
-      <div className={styles.sidebar}>
-        <div className={styles.avatar}>
-          <img
-            src={profileData.avatar?.url || defaultAvatarUrl}
-            alt={profileData.avatar?.alt || "Default Avatar"}
-            onError={handleImageError}
-          />
-        </div>
-        {isLoggedInUser && (
-          <button className="ctaButton" onClick={() => setIsFormOpen(true)}>
-            Update Profile
-          </button>
-        )}
-        <div className={styles.info}>
-          <h1>{profileData.name}</h1>
-          <p>{profileData.email}</p>
-          <p>{profileData.bio}</p>
-          {profileData.venueManager && <p>Venue Manager</p>}
-        </div>
-      </div>
-      <div className={styles.mainContent}>
-        <div className={styles.bookings}>
-          <h2>Your Bookings</h2>
-          {profileData.bookings && profileData.bookings.length > 0 ? (
-            profileData.bookings.map((booking) => (
-              <div key={booking.id} className={styles.booking}>
-                {booking.venue.media && booking.venue.media.length > 0 && (
-                  <img
-                    src={booking.venue.media[0].url}
-                    alt={booking.venue.media[0].alt}
-                    className={styles.bookingImage}
-                  />
-                )}
-                <div className={styles.bookingInfo}>
-                  <h3>{booking.venue.name}</h3>
-                  <p>From: {new Date(booking.dateFrom).toLocaleDateString()}</p>
-                  <p>To: {new Date(booking.dateTo).toLocaleDateString()}</p>
-                  <p>Guests: {booking.guests}</p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>
-              You haven't made any bookings yet. What are you waiting for? Go
-              check our <Link to="/venues">venues</Link> page.
-            </p>
+    <div>
+      <div className={styles.profileContainer}>
+        <div className={styles.sidebar}>
+          <div className={styles.avatar}>
+            <img
+              src={profileData.avatar?.url || defaultAvatarUrl}
+              alt={profileData.avatar?.alt || "Default Avatar"}
+              onError={handleImageError}
+            />
+          </div>
+          {isLoggedInUser && (
+            <button className="ctaButton" onClick={() => setIsFormOpen(true)}>
+              Update Profile
+            </button>
           )}
+          <div className={styles.info}>
+            <h1>{profileData.name}</h1>
+            <p>{profileData.email}</p>
+            <p>{profileData.bio}</p>
+            {profileData.venueManager && <p>Venue Manager</p>}
+          </div>
         </div>
-        <hr />
-        {profileData.venueManager && (
-          <div className={styles.venues}>
-            <h2>Your Venues</h2>
-            {profileData.venues && profileData.venues.length > 0 ? (
-              profileData.venues.map((venue) => (
-                <div key={venue.id} className={styles.venue}>
-                  <Link to={`/venue/${venue.id}`}>
-                    {venue.media && venue.media.length > 0 && (
-                      <img
-                        src={venue.media[0].url}
-                        alt={venue.media[0].alt}
-                        className={styles.venueImage}
-                      />
-                    )}
-                  </Link>
-                  <div className={styles.venueInfo}>
-                    <h3>{venue.name}</h3>
-                    <p>{venue.description}</p>
-                    <p>Price: ${venue.price}</p>
-                    <p>Max Guests: {venue.maxGuests}</p>
-                  </div>
-                  {isLoggedInUser && (
-                    <div className={styles.buttons}>
-                      <div>
-                        <Link to={`/update-venue/${venue.id}`}>
-                          <button className="ctaButton">Update</button>
-                        </Link>
-                      </div>
-                      <div>
-                        <button
-                          className="ctaButton"
-                          onClick={() => deleteVenue(venue.id)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
+        <div className={styles.mainContent}>
+          <div className={styles.bookings}>
+            <h2>Your Bookings</h2>
+            {profileData.bookings && profileData.bookings.length > 0 ? (
+              profileData.bookings.map((booking) => (
+                <div key={booking.id} className={styles.booking}>
+                  {booking.venue.media && booking.venue.media.length > 0 && (
+                    <img
+                      src={booking.venue.media[0].url}
+                      alt={booking.venue.media[0].alt}
+                      className={styles.bookingImage}
+                    />
                   )}
+                  <div className={styles.bookingInfo}>
+                    <h3>{booking.venue.name}</h3>
+                    <p>
+                      From: {new Date(booking.dateFrom).toLocaleDateString()}
+                    </p>
+                    <p>To: {new Date(booking.dateTo).toLocaleDateString()}</p>
+                    <p>Guests: {booking.guests}</p>
+                  </div>
                 </div>
               ))
             ) : (
-              <p>No venues available.</p>
+              <p>
+                You haven't made any bookings yet. What are you waiting for? Go
+                check our <Link to="/venues">venues</Link> page.
+              </p>
             )}
           </div>
-        )}
-        {isLoggedInUser && (
-          <div
-            className={`${styles.updateFormContainer} ${
-              isFormOpen ? styles.open : ""
-            }`}
-          >
-            <UpdateProfileForm
-              user={user}
-              apiKey={apiKey}
-              profileData={profileData}
-              setProfileData={setProfileData}
-              closeForm={() => setIsFormOpen(false)}
-            />
-          </div>
-        )}
+          <hr />
+          {profileData.venueManager && (
+            <div className={styles.venues}>
+              <h2>Your Venues</h2>
+              {profileData.venues && profileData.venues.length > 0 ? (
+                profileData.venues.map((venue) => (
+                  <div key={venue.id} className={styles.venue}>
+                    <Link to={`/venue/${venue.id}`}>
+                      {venue.media && venue.media.length > 0 && (
+                        <img
+                          src={venue.media[0].url}
+                          alt={venue.media[0].alt}
+                          className={styles.venueImage}
+                        />
+                      )}
+                    </Link>
+                    <div className={styles.venueInfo}>
+                      <h3>{venue.name}</h3>
+                      <p>{venue.description}</p>
+                      <p>Price: ${venue.price}</p>
+                      <p>Max Guests: {venue.maxGuests}</p>
+                    </div>
+                    {isLoggedInUser && (
+                      <div className={styles.buttons}>
+                        <div>
+                          <Link to={`/update-venue/${venue.id}`}>
+                            <button className="ctaButton">Update</button>
+                          </Link>
+                        </div>
+                        <div>
+                          <button
+                            className="ctaButton"
+                            onClick={() => deleteVenue(venue.id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p>No venues available.</p>
+              )}
+            </div>
+          )}
+          {isLoggedInUser && (
+            <div
+              className={`${styles.updateFormContainer} ${
+                isFormOpen ? styles.open : ""
+              }`}
+            >
+              <UpdateProfileForm
+                user={user}
+                apiKey={apiKey}
+                profileData={profileData}
+                setProfileData={setProfileData}
+                closeForm={() => setIsFormOpen(false)}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

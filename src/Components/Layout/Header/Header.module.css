@@ -1,6 +1,6 @@
 .logo {
   width: 100px;
-  height: auto;
+  height: 100%;
 }
 
 header {
@@ -9,6 +9,7 @@ header {
   justify-content: space-between;
   align-items: center;
   height: 80px;
+  background-color: var(--light);
 }
 
 .searchContainer {
@@ -49,7 +50,7 @@ nav {
   }
 
   .close {
-    background-color: black;
+    background-color: var(--black);
     outline: none;
     border: none;
   }
@@ -57,7 +58,7 @@ nav {
   .burger {
     background: none;
     border: none;
-    color: purple;
+    color: var(--burger);
     right: 0;
     top: 0;
   }
@@ -70,7 +71,7 @@ nav {
     max-width: 100%;
     height: 100%;
     background-color: black;
-    color: white;
+    color: var(--white);
     display: none;
   }
 
@@ -83,7 +84,7 @@ nav {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: black;
+    background-color: var(--black);
     z-index: 100;
     visibility: visible;
   }

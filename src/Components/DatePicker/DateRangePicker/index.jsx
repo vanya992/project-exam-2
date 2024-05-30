@@ -162,7 +162,6 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
       {successMessage && (
         <p className={styles.successMessage}>{successMessage}</p>
       )}{" "}
-      {/* Display success message */}
     </div>
   );
 };

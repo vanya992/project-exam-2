@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f9f9f9;
+  background-color: var(--background-lighter);
   padding: 20px;
 }
 
@@ -98,7 +98,7 @@
 .ownerCard,
 .venueCard {
   flex: 1;
-  background: #f1f1f1;
+  background: var(--light);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -119,7 +119,7 @@
 }
 
 .amenitiesSection {
-  background: #f1f1f1;
+  background: var(--light);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -142,7 +142,7 @@
 
 .bookingSection,
 .bookingsSection {
-  background: #f1f1f1;
+  background: var(--light);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -155,7 +155,7 @@
 }
 
 .booking {
-  background: #fff;
+  background: var(--white);
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);

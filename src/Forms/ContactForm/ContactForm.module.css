@@ -1,4 +1,4 @@
-form {
+.formBox {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,9 +15,9 @@ form {
   flex: 1;
 }
 
-input,
-textarea,
-select {
+.formBox input,
+.formBox textarea,
+.formBox select {
   border: 0;
   border-bottom: 1px solid black;
   background: transparent;
@@ -26,7 +26,7 @@ select {
   width: 100%;
 }
 
-label {
+.formBox label {
   position: absolute;
   top: 0;
   left: 0;
@@ -36,26 +36,26 @@ label {
   pointer-events: none;
 }
 
-input,
-label {
+.formBox input,
+.formBox label {
   font-size: 1.3em;
   height: 55px;
 }
 
-select {
+.formBox select {
   padding-top: 35px;
 }
 
-textarea {
+.formBox textarea {
   height: 100px;
 }
 
-input:focus + label,
-input:valid + label,
-textarea:focus + label,
-textarea:valid + label,
-select:focus + label,
-select:valid + label {
+.formBox input:focus + label,
+.formBox input:valid + label,
+.formBox textarea:focus + label,
+.formBox textarea:valid + label,
+.formBox select:focus + label,
+.formBox select:valid + label {
   color: grey;
   font-size: 1em;
   top: -35px;

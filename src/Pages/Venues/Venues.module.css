@@ -1,4 +1,6 @@
-/* Venues.module.css */
+.venuesBg {
+  background-color: var(--background);
+}
 
 .filterBox {
   margin-bottom: 20px;

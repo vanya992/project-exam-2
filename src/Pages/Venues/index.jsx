@@ -81,7 +81,7 @@ export const Venues = () => {
   }
 
   return (
-    <main>
+    <main className={styles.venuesBg}>
       <Helmet>
         <title>Venues | Holidaze</title>
       </Helmet>

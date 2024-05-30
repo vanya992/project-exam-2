@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../../Assets/images/holi-2.png";
+import logo from "../../../Assets/images/2024.png";
 import styles from "./Header.module.css";
 import { FaBars, FaTimes, FaUser } from "react-icons/fa";
 import { SearchBar } from "../../Search";
