@@ -2,6 +2,22 @@
   font-family: "Poppins";
   src: url("../src/Assets/Fonts/Poppins/Poppins-Light.ttf");
 }
+:root {
+  --background: #73563d;
+  --background-lighter: #bf7b3f;
+  --bluish: #bbe2f2;
+  --footer: #a66641;
+  --light: #d9c9ba;
+  --white: #fff;
+  --black: #000;
+  --burger: purple;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 * {
   margin: 0;
@@ -17,6 +33,7 @@ body {
   font-family: "Poppins";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
