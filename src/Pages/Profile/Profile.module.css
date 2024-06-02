@@ -40,6 +40,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-bottom: 10px;
+  background-color: var(--light);
 }
 
 .bookingImage,
@@ -64,7 +65,7 @@
 }
 
 h2 {
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
 .buttons {
@@ -75,6 +76,11 @@ h2 {
 }
 
 @media only screen and (max-width: 650px) {
+  .profileContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
   .sidebar,
   .mainContent {
     width: 100%;

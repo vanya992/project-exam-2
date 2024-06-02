@@ -4,6 +4,7 @@ import { FaSearch } from "react-icons/fa";
 
 export const SearchBar = ({ setResults, input, setInput }) => {
   const [allData, setAllData] = useState([]);
+  const [isInputVisible, setIsInputVisible] = useState(false);
 
   const fetchData = async (page = 1, accumulatedData = []) => {
     const limit = 100;
@@ -40,15 +41,20 @@ export const SearchBar = ({ setResults, input, setInput }) => {
     setResults(results);
   };
 
+  const toggleInputVisibility = () => {
+    setIsInputVisible((prevState) => !prevState);
+  };
+
   return (
     <div className={styles.searchSection}>
+      <FaSearch className={styles.searchIcon} onClick={toggleInputVisibility} />
       <input
         type="text"
         placeholder="Search"
         value={input}
         onChange={(e) => handleChange(e.target.value)}
+        className={`${styles.searchInput} ${isInputVisible ? styles.show : ""}`}
       />
-      <FaSearch />
     </div>
   );
 };

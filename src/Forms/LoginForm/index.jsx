@@ -44,7 +44,7 @@ export const LoginForm = ({ toggleForm }) => {
       <Helmet>
         <title>Login | Holidaze</title>
       </Helmet>
-      <div className={styles.bg}>
+      <div className="background">
         <div className={styles.wrapper}>
           <form onSubmit={handleSubmit}>
             <h1>Login</h1>
@@ -70,7 +70,7 @@ export const LoginForm = ({ toggleForm }) => {
               />
               <FaLock className={styles.icon} />
             </div>
-            <div className={styles.rememb2w3erForgot}>
+            <div className={styles.rememberForgot}>
               <label>
                 <input type="checkbox" /> Remember me
               </label>

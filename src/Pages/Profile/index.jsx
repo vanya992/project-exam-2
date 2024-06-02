@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../../Auth";
 import styles from "./Profile.module.css";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { UpdateProfileForm } from "../../Forms/UpdateProfileForm";
 import { Loader } from "../../Components/Loader";
+import { UpdateBookingForm } from "../../Forms/UpdateBookingForm";
 
 const defaultAvatarUrl =
   "https://cdn-icons-png.flaticon.com/512/149/149071.png";
@@ -20,6 +20,8 @@ export const Profile = () => {
   const [error, setError] = useState(null);
 
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [currentBooking, setCurrentBooking] = useState(null);
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -68,7 +70,7 @@ export const Profile = () => {
   }, [username, apiKey, user]);
 
   const deleteVenue = async (venueId) => {
-    if (!user || !user.token) {
+    if (!isLoggedInUser || !user || !user.token) {
       alert("You must be logged in to delete a venue.");
       return;
     }
@@ -104,6 +106,113 @@ export const Profile = () => {
       }
     } catch (error) {
       console.error("Error deleting venue:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      } else if (error.request) {
+        console.error("Request data:", error.request);
+      } else {
+        console.error("Error message:", error.message);
+      }
+    }
+  };
+
+  const deleteBooking = async (bookingId) => {
+    if (!isLoggedInUser || !user || !user.token) {
+      alert("You must be logged in to delete a booking.");
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this booking?"
+    );
+    if (!confirmDelete) {
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "X-Noroff-Api-Key": apiKey,
+      },
+    };
+
+    try {
+      const response = await axios.delete(
+        `https://v2.api.noroff.dev/holidaze/bookings/${bookingId}`,
+        config
+      );
+      if (response.status === 204) {
+        alert("Booking deleted successfully");
+        setProfileData((prevData) => ({
+          ...prevData,
+          bookings: prevData.bookings.filter(
+            (booking) => booking.id !== bookingId
+          ),
+        }));
+      } else {
+        console.error("Error deleting booking");
+        setError("Error deleting booking");
+      }
+    } catch (error) {
+      console.error("Error deleting booking:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      } else if (error.request) {
+        console.error("Request data:", error.request);
+      } else {
+        console.error("Error message:", error.message);
+      }
+    }
+  };
+
+  const openUpdateModal = (booking) => {
+    setCurrentBooking(booking);
+    setIsUpdateModalOpen(true);
+  };
+
+  const closeUpdateModal = () => {
+    setIsUpdateModalOpen(false);
+    setCurrentBooking(null);
+  };
+
+  const updateBooking = async (bookingId, updatedBookingData) => {
+    if (!isLoggedInUser || !user || !user.token) {
+      alert("You must be logged in to update a booking.");
+      return;
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        "X-Noroff-Api-Key": apiKey,
+      },
+    };
+
+    try {
+      const response = await axios.put(
+        `https://v2.api.noroff.dev/holidaze/bookings/${bookingId}`,
+        updatedBookingData,
+        config
+      );
+      if (response.status === 200) {
+        alert("Booking updated successfully");
+        setProfileData((prevData) => ({
+          ...prevData,
+          bookings: prevData.bookings.map((booking) =>
+            booking.id === bookingId ? response.data.data : booking
+          ),
+        }));
+        closeUpdateModal();
+      } else {
+        console.error("Error updating booking");
+        setError("Error updating booking");
+      }
+    } catch (error) {
+      console.error("Error updating booking:", error);
       if (error.response) {
         console.error("Response data:", error.response.data);
         console.error("Response status:", error.response.status);
@@ -169,21 +278,39 @@ export const Profile = () => {
             {profileData.bookings && profileData.bookings.length > 0 ? (
               profileData.bookings.map((booking) => (
                 <div key={booking.id} className={styles.booking}>
-                  {booking.venue.media && booking.venue.media.length > 0 && (
-                    <img
-                      src={booking.venue.media[0].url}
-                      alt={booking.venue.media[0].alt}
-                      className={styles.bookingImage}
-                    />
-                  )}
+                  {booking.venue &&
+                    booking.venue.media &&
+                    booking.venue.media.length > 0 && (
+                      <img
+                        src={booking.venue.media[0].url}
+                        alt={booking.venue.media[0].alt}
+                        className={styles.bookingImage}
+                      />
+                    )}
                   <div className={styles.bookingInfo}>
-                    <h3>{booking.venue.name}</h3>
+                    <h3>{booking.venue?.name}</h3>
                     <p>
                       From: {new Date(booking.dateFrom).toLocaleDateString()}
                     </p>
                     <p>To: {new Date(booking.dateTo).toLocaleDateString()}</p>
                     <p>Guests: {booking.guests}</p>
                   </div>
+                  {isLoggedInUser && (
+                    <div className={styles.buttons}>
+                      <button
+                        className="ctaButton"
+                        onClick={() => openUpdateModal(booking)}
+                      >
+                        Update
+                      </button>
+                      <button
+                        className="ctaButton"
+                        onClick={() => deleteBooking(booking.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))
             ) : (
@@ -256,6 +383,16 @@ export const Profile = () => {
           )}
         </div>
       </div>
+      {isUpdateModalOpen && currentBooking && (
+        <div className={styles.updateModal}>
+          <UpdateBookingForm
+            booking={currentBooking}
+            bookings={profileData.bookings}
+            onUpdate={updateBooking}
+            onClose={closeUpdateModal}
+          />
+        </div>
+      )}
     </div>
   );
 };

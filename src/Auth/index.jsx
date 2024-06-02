@@ -6,6 +6,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,23 +14,20 @@ export const AuthProvider = ({ children }) => {
     const userName = localStorage.getItem("userName");
     const venueManager = localStorage.getItem("venueManager") === "true";
 
-    console.log("useEffect - AuthProvider:", {
-      authToken,
-      userName,
-      venueManager,
-    });
-
     if (authToken && typeof authToken === "string" && userName) {
-      const decodedToken = jwtDecode(authToken);
-      console.log("Decoded Token on load:", decodedToken);
-      setUser({
-        token: authToken,
-        name: userName,
-        venueManager,
-      });
-    } else {
-      localStorage.removeItem("authToken");
+      try {
+        const decodedToken = jwtDecode(authToken);
+        setUser({
+          token: authToken,
+          name: userName,
+          venueManager,
+        });
+      } catch (error) {
+        console.error("Failed to decode token:", error);
+        localStorage.removeItem("authToken");
+      }
     }
+    setLoading(false);
   }, []);
 
   const fetchUserProfile = async (token, userName) => {
@@ -48,11 +46,7 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         const venueManager = data.data.venueManager || false;
-
-        console.log("fetchUserProfile - response data:", { venueManager });
-
         localStorage.setItem("venueManager", venueManager.toString());
-
         setUser((prevUser) => ({
           ...prevUser,
           venueManager,
@@ -79,11 +73,6 @@ export const AuthProvider = ({ children }) => {
         const data = await response.json();
         const token = data.data.accessToken;
         const user = data.data.name;
-
-        console.log("login - response data:", { token, user });
-
-        const decodedToken = jwtDecode(token);
-        console.log("Decoded Token after login:", decodedToken);
 
         localStorage.setItem("authToken", token);
         localStorage.setItem("userName", user);
@@ -115,7 +104,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
+      {loading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   );
 };

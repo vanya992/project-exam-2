@@ -5,14 +5,13 @@ import { useNavigate } from "react-router-dom";
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, generateApiKey } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login({ email, password });
-      await generateApiKey();
       navigate("/profile");
     } catch (error) {
       console.error("Login failed:", error);

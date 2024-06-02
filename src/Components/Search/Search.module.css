@@ -7,10 +7,18 @@
   border: 1px solid black;
   border-radius: 40px;
   max-width: 200px;
+  position: relative;
+  background-color: transparent;
+}
+
+.searchIcon {
+  cursor: pointer;
+  font-size: 1.5rem;
+  position: absolute;
+  right: 10px;
 }
 
 .searchSection input {
-  position: relative;
   padding: 10px;
   background: transparent;
   border: none;
@@ -18,8 +26,27 @@
   max-width: 200px;
   color: black;
   font-size: 15px;
+  flex: 1;
 }
 
 .searchSection input::placeholder {
   color: var(--black);
+}
+
+@media (max-width: 768px) {
+  .searchSection {
+    padding: 0px 10px;
+    border: none;
+    background: none;
+  }
+
+  .searchSection input {
+    display: none;
+  }
+
+  .searchSection input.show {
+    display: block;
+    border-bottom: 1px solid var(--black);
+    background: transparent;
+  }
 }

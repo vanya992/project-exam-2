@@ -1,6 +1,7 @@
 .logo {
-  width: 100px;
+  width: 50%;
   height: 100%;
+  margin: 0;
 }
 
 header {
@@ -58,7 +59,7 @@ nav {
   .burger {
     background: none;
     border: none;
-    color: var(--burger);
+    color: var(--background);
     right: 0;
     top: 0;
   }

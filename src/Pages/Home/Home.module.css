@@ -29,6 +29,7 @@
   display: flex;
   justify-content: space-around;
   margin: 30px;
+  color: var(--light);
 }
 
 .infoLayout div {
@@ -41,7 +42,7 @@
 
 .icon {
   font-size: 3rem;
-  color: brown;
+  color: var(--light);
 }
 
 @media only screen and (max-width: 650px) {

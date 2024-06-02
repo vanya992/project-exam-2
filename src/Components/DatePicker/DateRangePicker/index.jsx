@@ -46,8 +46,8 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
 
   const handleDateSelection = (startDate, endDate) => {
     setSelectedStartDate(startDate);
-    setSelectedEndDate(endDate);
-    calculateTotalPrice(startDate, endDate);
+    setSelectedEndDate(endDate || startDate);
+    calculateTotalPrice(startDate, endDate || startDate);
   };
 
   const calculateTotalPrice = (startDate, endDate) => {
@@ -136,23 +136,22 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
       {showConfetti && <Confetti />}
       <div className={styles.selectedDates}>
         {selectedStartDate ? (
-          selectedEndDate ? (
-            <div>
-              <span className={styles.days}>
-                {differenceInDays(selectedEndDate, selectedStartDate) + 1} days
-              </span>
-              <div>
-                <span>{format(selectedStartDate, "d. MMMM")}</span>
-                <span className={styles.dateSeparator}>-</span>
-                <span>{format(selectedEndDate, "d. MMMM")}</span>
-              </div>
-            </div>
-          ) : (
+          <div>
+            <span className={styles.days}>
+              {differenceInDays(
+                selectedEndDate || selectedStartDate,
+                selectedStartDate
+              ) + 1}{" "}
+              days
+            </span>
             <div>
               <span>{format(selectedStartDate, "d. MMMM")}</span>
               <span className={styles.dateSeparator}>-</span>
+              <span>
+                {format(selectedEndDate || selectedStartDate, "d. MMMM")}
+              </span>
             </div>
-          )
+          </div>
         ) : (
           <span className={styles.prompt}>Choose your dates</span>
         )}
@@ -165,17 +164,19 @@ export const DateRangePicker = ({ venue, onBookingSuccess }) => {
         guests={guests}
         setGuests={setGuests}
       />
-      <button
-        type="submit"
-        className="ctaButton"
-        onClick={handleSubmit}
-        disabled={!selectedStartDate || !selectedEndDate}
-      >
-        Book venue
-      </button>
-      {successMessage && (
-        <p className={styles.successMessage}>{successMessage}</p>
-      )}{" "}
+      <div className={styles.actions}>
+        <button
+          type="submit"
+          className="ctaButton"
+          onClick={handleSubmit}
+          disabled={!selectedStartDate || !selectedEndDate}
+        >
+          Book venue
+        </button>
+        {successMessage && (
+          <p className={styles.successMessage}>{successMessage}</p>
+        )}
+      </div>
     </div>
   );
 };

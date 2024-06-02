@@ -29,8 +29,8 @@ export const Venues = () => {
   const [selectedAmenities, setSelectedAmenities] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isError, setIsError] = useState(false);
-
   const [loading, setLoading] = useState(true);
+  const [isFilterVisible, setIsFilterVisible] = useState(false); // New state for filter visibility
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -74,6 +74,10 @@ export const Venues = () => {
     setFilteredData(filtered);
   };
 
+  const toggleFilterVisibility = () => {
+    setIsFilterVisible((prevState) => !prevState);
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (isError || fetchError) {
     console.error("Error fetching data");
@@ -91,7 +95,17 @@ export const Venues = () => {
         <>
           <h1>Find your dream vacation</h1>
           <div className={styles.filterBox}>
-            <div className={styles.filterOptions}>
+            <button
+              className={styles.filterToggle}
+              onClick={toggleFilterVisibility}
+            >
+              Filter Options
+            </button>
+            <div
+              className={`${styles.filterOptions} ${
+                isFilterVisible ? styles.show : ""
+              }`}
+            >
               {categories.map((category) => (
                 <div
                   key={category.value}

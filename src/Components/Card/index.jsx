@@ -3,13 +3,18 @@ import styles from "./Card.module.css";
 import { FaStar, FaMapPin } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+const defaultImageUrl =
+  "https://cdn.vectorstock.com/i/500p/82/99/no-image-available-like-missing-picture-vector-43938299.jpg";
+
 export const Card = ({ venue }) => {
   const imageUrl =
     venue.media && venue.media.length > 0
       ? venue.media[0].url
-      : "default-image-url.jpg";
+      : defaultImageUrl;
   const imageAlt =
-    venue.media && venue.media.length > 0 ? venue.media[0].alt : "default-alt";
+    venue.media && venue.media.length > 0
+      ? venue.media[0].alt
+      : "default image";
 
   return (
     <div className={styles.card}>

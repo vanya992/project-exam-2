@@ -48,10 +48,10 @@ export const VenueDatepicker = ({ bookings, onDateChange }) => {
       const startDate = new Date(booking.dateFrom);
       const endDate = new Date(booking.dateTo);
       if (date >= startDate && date <= endDate) {
-        return { style: { backgroundColor: "#ffcccc" } }; // Booked dates in red
+        return { style: { backgroundColor: "#ffcccc" } };
       }
     }
-    return { style: { backgroundColor: "#ccffcc" } }; // Available dates in green
+    return { style: { backgroundColor: "#ccffcc" } };
   };
 
   return (
@@ -59,7 +59,7 @@ export const VenueDatepicker = ({ bookings, onDateChange }) => {
       <input
         value={`${format(range[0].startDate, "dd/MM/yyyy")} to ${format(
           range[0].endDate,
-          "MM/dd/yyyy"
+          "dd/MM/yyyy"
         )}`}
         readOnly
         className={styles.datepickerInput}

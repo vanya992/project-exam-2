@@ -80,7 +80,7 @@ export const RegisterForm = ({ toggleForm }) => {
       return;
     }
 
-    console.log("Form data before submission:", formData); // Debugging log
+    console.log("Form data before submission:", formData);
 
     try {
       const response = await fetch("https://v2.api.noroff.dev/auth/register", {
@@ -91,10 +91,10 @@ export const RegisterForm = ({ toggleForm }) => {
         body: JSON.stringify(formData),
       });
 
-      console.log("Registering with data:", JSON.stringify(formData)); // Debugging log
+      console.log("Registering with data:", JSON.stringify(formData));
 
       const data = await response.json();
-      console.log("API Response:", data); // Debugging log
+      console.log("API Response:", data);
 
       if (!response.ok) {
         throw new Error(
@@ -116,7 +116,7 @@ export const RegisterForm = ({ toggleForm }) => {
       <Helmet>
         <title>Register | Holidaze</title>
       </Helmet>
-      <div className={styles.bg}>
+      <div className="background">
         <div className={styles.wrapper}>
           {isRegistered ? (
             <div>
@@ -168,7 +168,7 @@ export const RegisterForm = ({ toggleForm }) => {
                   required
                 />
               </div>
-              <div className={styles.inputBox}>
+              <div className={styles.venueManager}>
                 <label>
                   <input
                     type="checkbox"
