@@ -14,7 +14,7 @@ export const Profile = () => {
   const { user } = useAuth();
   const { username } = useParams();
   const isLoggedInUser = !username || username === user?.name;
-  const apiKey = "1c2760d0-27d1-43fa-8a29-5ae1688a818f";
+  const apiKey = process.env.REACT_APP_API_KEY;
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
