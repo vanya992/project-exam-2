@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
@@ -15,19 +14,14 @@ export const AuthProvider = ({ children }) => {
     const venueManager = localStorage.getItem("venueManager") === "true";
 
     if (authToken && typeof authToken === "string" && userName) {
-      try {
-        setUser({
-          token: authToken,
-          name: userName,
-          venueManager,
-        });
-      } catch (error) {
-        console.error("Failed to decode token:", error);
-        localStorage.removeItem("authToken");
-      }
+      setUser({
+        token: authToken,
+        name: userName,
+        venueManager,
+      });
     }
     setLoading(false);
-  }, []);
+  }, [navigate]);
 
   const fetchUserProfile = async (token, userName) => {
     try {
