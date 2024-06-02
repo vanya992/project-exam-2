@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }) => {
 
     if (authToken && typeof authToken === "string" && userName) {
       try {
-        const decodedToken = jwtDecode(authToken);
         setUser({
           token: authToken,
           name: userName,

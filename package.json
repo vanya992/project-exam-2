@@ -11,6 +11,7 @@
     "axios": "^1.7.1",
     "date-fns": "^3.6.0",
     "jwt-decode": "^4.0.0",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-confetti": "^6.1.0",
     "react-date-range": "^2.0.1",
@@ -35,8 +36,17 @@
       "react-app",
       "react-app/jest",
       "plugin:react/recommended",
-      "plugin:react/jsx-runtime"
+      "plugin:react/jsx-runtime",
+      "plugin:jest/recommended"
     ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "env": {
+      "jest": true
+    },
     "rules": {
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "warn",
@@ -57,6 +67,7 @@
   },
   "devDependencies": {
     "eslint": "^8.57.0",
+    "eslint-plugin-jest": "^25.7.0",
     "eslint-plugin-react": "^7.34.2"
   }
 }

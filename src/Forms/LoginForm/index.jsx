@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import styles from "../Forms.module.css";
 import { Helmet } from "react-helmet";
@@ -80,7 +80,7 @@ export const LoginForm = ({ toggleForm }) => {
             {error && <p className={styles.error}>{error}</p>}
             <div className={styles.registerLink}>
               <p>
-                Don't have a profile?{" "}
+                Do not have a profile?{" "}
                 <a href="#" onClick={toggleForm}>
                   Register
                 </a>

@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Card.module.css";
 import { FaStar, FaMapPin } from "react-icons/fa";
 import { Link } from "react-router-dom";

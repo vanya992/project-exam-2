@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../VenueForms.module.css";
 import { FaUtensils, FaWifi, FaPaw } from "react-icons/fa";

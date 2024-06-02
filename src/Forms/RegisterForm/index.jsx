@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import styles from "../Forms.module.css";

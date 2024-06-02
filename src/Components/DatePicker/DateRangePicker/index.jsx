@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { format, differenceInDays, startOfDay } from "date-fns";
 import { Calendar } from "../../Calendar";
 import { useAuth } from "../../../Auth";

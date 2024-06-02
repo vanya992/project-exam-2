@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../../Auth";
 import styles from "./Profile.module.css";
@@ -315,8 +315,12 @@ export const Profile = () => {
               ))
             ) : (
               <p>
-                You haven't made any bookings yet. What are you waiting for? Go
-                check our <Link to="/venues">venues</Link> page.
+                You have not made any bookings yet. What are you waiting for? Go
+                check our{" "}
+                <Link to="/venues">
+                  <b>venues</b>
+                </Link>{" "}
+                page.
               </p>
             )}
           </div>
