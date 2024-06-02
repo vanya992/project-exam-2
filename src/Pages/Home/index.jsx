@@ -33,9 +33,11 @@ export const Home = () => {
             Enjoy free Wi-Fi, parking, and breakfast options, with central
             locations.
           </p>
-          <button className="ctaButton">
-            Book now <FaAngleRight />
-          </button>
+          <Link to="/venues">
+            <button className="ctaButton">
+              Book now <FaAngleRight />
+            </button>
+          </Link>
         </div>
         <div>
           <div>
@@ -46,9 +48,11 @@ export const Home = () => {
             We guarantee you will find your dream vacation that fits your
             budget.
           </p>
-          <button className="ctaButton">
-            Book now <FaAngleRight />
-          </button>
+          <Link to="/venues">
+            <button className="ctaButton">
+              Book now <FaAngleRight />
+            </button>
+          </Link>
         </div>
         <div>
           <div>
@@ -56,9 +60,11 @@ export const Home = () => {
           </div>
           <h3>Pet Friendly options</h3>
           <p>We welcome your furry friends with open arms.</p>
-          <button className="ctaButton">
-            Book now <FaAngleRight />
-          </button>
+          <Link to="/venues">
+            <button className="ctaButton">
+              Book now <FaAngleRight />
+            </button>
+          </Link>
         </div>
       </section>
     </main>
