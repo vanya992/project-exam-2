@@ -30,7 +30,7 @@ export const Venues = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isError, setIsError] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [isFilterVisible, setIsFilterVisible] = useState(false); // New state for filter visibility
+  const [isFilterVisible, setIsFilterVisible] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
